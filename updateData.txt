@@ -1,0 +1,195 @@
+<?php
+class Kk extends CI_Controller
+{
+
+    public function index()
+    {
+        $data['tittle'] = 'Data Kepala Keluarga';
+        $this->load->model('Kk_m');
+        $data['tahun'] = $this->iuranModel->get_data('tahun')->result();
+        // $data['user'] = $this->Auth_m->get_where('users', ['username' => $this->session->userdata('username')])->row_array();
+        $data['kk'] = $this->Kk_m->get('kk')->result_array();
+        // $data['anggota'] = $this->Anggota_m->get('anggota')->result_array();
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar');
+            $this->load->view('admin/kk/index', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $biaya = html_escape($this->input->post('biaya', true));
+            $data = [
+                'nik' => html_escape($this->input->post('nik', true)),
+                'nama_kk' => html_escape($this->input->post('nama_kk', true)),
+                'alamat' => html_escape($this->input->post('alamat', true)),
+                'tgl_lahir' => html_escape($this->input->post('tgl_lahir', true)),
+                'telepon' => html_escape($this->input->post('telepon', true)),
+                'status' => html_escape($this->input->post('status', true)),
+                'biaya' => $biaya
+            ];
+
+            $AwalJatuhTempo = $this->input->post('jatuh_tempo', true);
+
+            // Tampil bulan berdasarkan bhs indonesia
+            $bulanIndo = [
+                '01' => 'Januari',
+                '02' => 'Februari',
+                '03' => 'Maret',
+                '04' => 'April',
+                '05' => 'Mei',
+                '06' => 'Juni',
+                '07' => 'Juli',
+                '08' => 'Agustus',
+                '09' => 'September',
+                '10' => 'Oktober',
+                '11' => 'November',
+                '12' => 'Desember'
+            ];
+
+            // tambah data siswa
+            $tbKk = $this->db->insert('kk', $data);
+            // if(!$tbSiswa) {
+            // 	$this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-info-circle"></i> Data Wali Kelas Berhasil Ditambahkan.</div>');
+            // 	redirect('admin/siswa');
+            // }
+
+
+            // Amil data DB siswa berdasarkan id_siswa
+            $this->db->limit(1);
+            $this->db->order_by('id_keluarga', 'desc');
+            $kk = $this->db->get('kk')->row_array();
+            $idKk = $kk['id_keluarga'];
+
+            // tagihan (12 bulan dimulai dari Juli 2017 dan menyimpan tagihan ditabel spp)
+            for ($i = 0; $i < 12; $i++) {
+                // membuat tgl jatuh tempo nya setiap tanggal 10
+                $jatuhTempo = date('Y-m-d', strtotime("+$i month", strtotime($AwalJatuhTempo)));
+                $bulan = $bulanIndo[date('m', strtotime($jatuhTempo))] . " " . date('Y', strtotime($jatuhTempo));
+
+                $data = [
+                    'id_keluarga' => $idKk,
+                    'jatuh_tempo' => $jatuhTempo,
+                    'bulan' => $bulan,
+                    'jumlah' => $biaya
+                    // 'id_user' => $this->session->userdata('id_user')
+                ];
+                $this->Kk_m->insert('pembayaran', $data);
+            }
+
+
+            // $this->Wali_m->insert('wali_kelas', $data);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-info-circle"></i> Data Kepala Keluarga Berhasil Ditambahkan.</div>');
+            redirect('admin/kk');
+        }
+    }
+
+    // public function tambahData()
+    // {
+    //     $data['tittle'] = "Tambah Data Kepala Keluarga";
+    //     $this->load->view('templates/header', $data);
+    //     $this->load->view('templates/sidebar');
+    //     $this->load->view('admin/tambahDataKk', $data);
+    //     $this->load->view('templates/footer');
+    // }
+
+    // public function tambahDataAksi()
+    // {
+    //     $this->_rules();
+    //     if ($this->form_validation->run() == FALSE) {
+    //         $this->tambahData();
+    //     } else {
+    //         $nama_kk = $this->input->post('nama_kk');
+    //         $alamat = $this->input->post('alamat');
+    //         $tgl_lahir = $this->input->post('tgl_lahir');
+    //         $telepon = $this->input->post('telepon');
+    //         $nik = $this->input->post('nik');
+    //         $status = $this->input->post('status');
+
+    //         $data = array(
+    //             'nama_kk' => $nama_kk,
+    //             'alamat' => $alamat,
+    //             'tgl_lahir' => $tgl_lahir,
+    //             'telepon' => $telepon,
+    //             'nik' => $nik,
+    //             'status' => $status,
+    //         );
+    //         $this->iuranModel->insert_data($data, 'kk');
+    //         $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    //         <strong>Data berhasil ditambahkan!</strong>
+    //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    //           <span aria-hidden="true">&times;</span>
+    //         </button>
+    //       </div>');
+    //         redirect('admin/dataKk');
+    //     }
+    // }
+
+    public function updateData($id)
+    {
+        $where = array('id_keluarga' => $id);
+        $data['kk'] = $this->db->query("SELECT * FROM kk WHERE id_keluarga='$id'")->result();
+        $data['tittle'] = "Update Data Kepala Keluarga";
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar');
+        $this->load->view('admin/updateDataKk', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function updateDataAksi()
+    {
+        $this->_rules();
+        if ($this->form_validation->run() == FALSE) {
+            $this->updateData();
+        } else {
+            $id      = $this->input->post('id_keluarga');
+            $nama_kk = $this->input->post('nama_kk');
+            $alamat = $this->input->post('alamat');
+            $tgl_lahir = $this->input->post('tgl_lahir');
+            $telepon = $this->input->post('telepon');
+            $nik = $this->input->post('nik');
+            $status = $this->input->post('status');
+
+            $data = array(
+
+                'nama_kk' => $nama_kk,
+                'alamat' => $alamat,
+                'tgl_lahir' => $tgl_lahir,
+                'telepon' => $telepon,
+                'nik' => $nik,
+                'status' => $status,
+            );
+            $where = array(
+                'id_keluarga' => $id
+            );
+            $this->iuranModel->update_data('kk', $data, $where);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Data berhasil diupdate!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>');
+            redirect('admin/dataKk');
+        }
+    }
+    public function deleteData($id)
+    {
+        $where = array('id_keluarga' => $id);
+        $this->iuranModel->delete_data($where, 'kk');
+        $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Data berhasil dihapus!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>');
+        redirect('admin/dataKk');
+    }
+
+    public function _rules()
+    {
+        $this->form_validation->set_rules('nama_kk', 'Nama Kepala Keluarga', 'required');
+        $this->form_validation->set_rules('alamat', 'alamat', 'required');
+        $this->form_validation->set_rules('tgl_lahir', 'tgl lahir', 'required');
+        $this->form_validation->set_rules('telepon', 'telepon', 'required');
+        $this->form_validation->set_rules('nik', 'no kk', 'required');
+        $this->form_validation->set_rules('status', 'status', 'required');
+    }
+}
