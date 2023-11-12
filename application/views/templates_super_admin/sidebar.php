@@ -20,7 +20,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url("admin/dashboard") ?>">
+                <a class="nav-link" href="<?php echo base_url("superAdmin/dashboard") ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span><b>DASHBOARD</b></span></a>
             </li>
@@ -35,8 +35,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo base_url("admin/kk") ?>">DATA KK</a>
-                        <a class="collapse-item" href="<?php echo base_url("admin/anggota") ?>">DATA ANGGOTA</a>
+                        <a class="collapse-item" href="<?php echo base_url("superAdmin/kk") ?>">DATA KK</a>
+                        <a class="collapse-item" href="<?php echo base_url("superAdmin/anggota") ?>">DATA ANGGOTA</a>
                     </div>
                 </div>
             </li>
@@ -44,7 +44,7 @@
             <!-- Nav Item - Utilities Collapse Menu -->
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url("admin/transaksi") ?>">
+                <a class="nav-link" href="<?php echo base_url("superAdmin/transaksi") ?>">
                     <i class="fas fa-fw fa-money-check-alt"></i>
                     <span><b>TRANSAKSI</b></span></a>
             </li>
@@ -52,27 +52,34 @@
             <!-- Nav Item - Pages Collapse Menu -->
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url("admin/laporan") ?>">
+                <a class="nav-link" href="<?php echo base_url("superAdmin/laporan") ?>">
                     <i class="fas fa-fw fa-copy"></i>
                     <span><b>LAPORAN</b></span></a>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url("admin/barcode") ?>">
+                <a class="nav-link" href="<?php echo base_url("superAdmin/barcode") ?>">
                     <i class="fas fa-fw fa-download"></i>
                     <span><b>GENETARE BARCODE</b></span></a>
             </li>
 
+            <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url("admin/profil") ?>">
+                <a class="nav-link" href="<?php echo base_url("superAdmin/data_admin") ?>">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span><b>DATA ADMIN</b></span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url("superAdmin/profil") ?>">
                     <i class="fas fa-fw fa-user"></i>
                     <span><b>PROFIL</b></span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url("admin/masuk/keluar") ?>">
+                <a class="nav-link" href="<?php echo base_url("superAdmin/masuk/keluar") ?>">
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     <span><b>LOGOUT</b></span></a>
             </li>
@@ -113,7 +120,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $nama_admin; ?></span>
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $nama_super_admin; ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->

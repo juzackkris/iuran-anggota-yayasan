@@ -12,18 +12,18 @@ class Laporan extends CI_Controller
     public function index()
     {
         if ($this->session->userdata('status') == "login") {
-            $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+            $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
             $data = array(
-                'id_admin' => $data->id_admin,
-                'nama_admin' => $data->nama_admin,
+                'id_super_admin' => $data->id_super_admin,
+                'nama_super_admin' => $data->nama_super_admin,
                 'username' => $data->username,
                 'password' => $data->password
             );
             $data['title'] = 'Laporan';
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('admin/laporan/index', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates_super_admin/header', $data);
+            $this->load->view('templates_super_admin/sidebar', $data);
+            $this->load->view('superAdmin/laporan/index', $data);
+            $this->load->view('templates_super_admin/footer');
         } else {
             redirect('home/keluar/');
         }
@@ -31,42 +31,42 @@ class Laporan extends CI_Controller
 
     public function kk()
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
         $data['title'] = 'Laporan Kepala Keluarga';
         $data['kk'] = $this->db->get('kk')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('admin/laporan/laporan_kk', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('superAdmin/laporan/laporan_kk', $data);
+        $this->load->view('templates_super_admin/footer');
     }
 
     public function anggota()
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
         $data['title'] = 'Laporan Anggota Keluarga';
         $data['anggota'] = $this->db->get('anggota')->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('admin/laporan/laporan_anggota', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('superAdmin/laporan/laporan_anggota', $data);
+        $this->load->view('templates_super_admin/footer');
     }
 
     public function pembayaran()
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -78,17 +78,17 @@ class Laporan extends CI_Controller
         ];
         $data['title'] = 'Laporan Pembayaran';
         $data['bayar'] = $this->Transaksi_m->get_join($mulaiTgl, $sampaiTgl)->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('admin/laporan/laporan_pembayaran', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('superAdmin/laporan/laporan_pembayaran', $data);
+        $this->load->view('templates_super_admin/footer');
     }
 
     public function pembayaranExcel($mulaiTgl, $sampaiTgl)
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -98,18 +98,18 @@ class Laporan extends CI_Controller
         ];
         $data['title'] = 'Laporan Excel Pembayaran';
         $data['bayar'] = $this->Transaksi_m->get_join($mulaiTgl, $sampaiTgl)->result_array();
-        $this->load->view('layout/header', $data);
-        $this->load->view('admin/laporan/laporan_pembayaran_excel', $data);
-        $this->load->view('layout/footer');
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('superAdmin/laporan/laporan_pembayaran_excel', $data);
+        $this->load->view('templates_super_admin/footer');
     }
 
     public function pendaftaranBulanan()
     {
 
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data_admin = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -119,19 +119,19 @@ class Laporan extends CI_Controller
         ];
         $data['title'] = 'Laporan Pendaftaran Anggota Baru Bulanan';
         $data['kk'] = $this->Transaksi_m->get_pendaftaran_bulanan($tgl_input)->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data_admin);
-        $this->load->view('admin/laporan/laporan_pendaftaranBulanan', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('templates_super_admin/sidebar', $data_admin);
+        $this->load->view('superAdmin/laporan/laporan_pendaftaranBulanan', $data);
+        $this->load->view('templates_super_admin/footer');
     }
 
     public function kematianPertahun()
     {
 
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data_admin = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -143,18 +143,18 @@ class Laporan extends CI_Controller
         ];
         $data['title'] = 'Laporan Kematian Anggota Pertahun';
         $data['kk'] = $this->Transaksi_m->get_kematian_anggota($mulaiTgl, $sampaiTgl)->result_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data_admin);
-        $this->load->view('admin/laporan/laporan_kematian', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('templates_super_admin/sidebar', $data_admin);
+        $this->load->view('superAdmin/laporan/laporan_kematian', $data);
+        $this->load->view('templates_super_admin/footer');
     }
 
     public function cetakStruk($nomor_id)
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -169,16 +169,16 @@ class Laporan extends CI_Controller
             $this->session->set_flashdata('pesan_transaksi', '<div class="alert alert-danger" role="alert"><i class="fas fa-info-circle"></i> Tidak ada transaksi hari ini.</div>');
             redirect('admin/transaksi/cariTransaksi?nomor_id=' . $nomor_id);
         }
-        $this->load->view('templates/header', $data);
-        $this->load->view('admin/laporan/cetak_struk', $data);
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('superAdmin/laporan/cetak_struk', $data);
     }
 
     public function cetakStrukPeriode($nomor_id)
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -196,9 +196,9 @@ class Laporan extends CI_Controller
         $data['bayar'] = $this->Transaksi_m->get_struk_periode($tanggal, $nomor_id)->result_array();
         if ($data['bayar'] == null) {
             $this->session->set_flashdata('pesan_pertanggal', '<div class="alert alert-danger" role="alert"><i class="fas fa-info-circle"></i> Tidak ada transaksi pada tanggal '. $convertTanggal .'.</div>');
-            redirect('admin/transaksi/cariTransaksi?nomor_id=' . $nomor_id);
+            redirect('superAdmin/transaksi/cariTransaksi?nomor_id=' . $nomor_id);
         }
-        $this->load->view('templates/header', $data);
-        $this->load->view('admin/laporan/cetak_struk', $data);
+        $this->load->view('templates_super_admin/header', $data);
+        $this->load->view('superAdmin/laporan/cetak_struk', $data);
     }
 }

@@ -40,7 +40,7 @@
                             <div class="card mb-5">
                                 <div class="card-body">
                                     <h5 class="card-title"><b>Laporan Pendaftaran Bulanan</b></h5>
-                                    <?= form_open('admin/laporan/pendaftaranBulanan'); ?>
+                                    <?= form_open('superAdmin/laporan/pendaftaranBulanan'); ?>
                                     <div class="form-group">
                                         <label for="mulai_tgl">Pilih Bulan</label>
                                         <input type="month" name="tgl_input" class="form-control" value="<?= date('F Y'); ?>">
@@ -54,7 +54,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title"><b>Laporan Kematian Tahunan</b></h5>
-                                    <?= form_open('admin/laporan/kematianPertahun'); ?>
+                                    <?= form_open('superAdmin/laporan/kematianPertahun'); ?>
                                     <div class="form-group">
                                         <label for="mulai_tgl">Mulai Tanggal</label>
                                         <input type="date" name="mulai_tgl" class="form-control" value="<?= date('Y-m-d'); ?>">
@@ -74,7 +74,7 @@
                             <div class="card">
                                 <div class="card-body">
                                 <h5 class="card-title"><b> Pembayaran</b></h5>
-                                    <?= form_open('admin/laporan/pembayaran'); ?>
+                                    <?= form_open('superAdmin/laporan/pembayaran'); ?>
                                     <div class="form-group">
                                         <label for="mulai_tgl">Mulai Tanggal</label>
                                         <input type="date" name="mulai_tgl" class="form-control" value="<?= date('Y-m-d'); ?>">

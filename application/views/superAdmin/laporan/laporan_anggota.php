@@ -14,31 +14,29 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>No</th>
-                        <th>Nomor ID</th>
                         <th>Kepala Keluarga</th>
+                        <th>Nama Anggota Keluarga</th>
                         <th>Alamat</th>
-                        <th>Tagihan Bulan</th>
-                        <th>Jumlah Tagihan</th>
-                        <th>Keterangan</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Telepon</th>
+                        <th>Status</th>
+                        <th>NIK</th>
+                        <th>Nomor KK</th>
                     </tr>
-                    <?php $total = 0;
-                    $no = 1;
-                    foreach ($tunggakan as $t) : ?>
+                    <?php $no = 1;
+                    foreach ($anggota as $a) : ?>
                         <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= $t['nomor_id']; ?></td>
-                            <td><?= $t['nama_kk']; ?></td>
-                            <td><?= $t['alamat']; ?></td>
-                            <td><?= $t['bulan']; ?></td>
-                            <td><?= $t['jumlah']; ?></td>
-                            <td>Belum Bayar</td>
+                            <td><?php echo $no++ ?></td>
+                            <td><?= $a['nama_kk']; ?></td>
+                            <td><?= $a['nama']; ?></td>
+                            <td><?= $a['alamat']; ?></td>
+                            <td><?= $a['tgl_lahir']; ?></td>
+                            <td><?= $a['telepon']; ?></td>
+                            <td><?= $a['status']; ?></td>
+                            <td><?= $a['nik']; ?></td>
+                            <td><?= $a['no_kk']; ?></td>
                         </tr>
-                        <?php $total += $t['jumlah']; ?>
                     <?php endforeach; ?>
-                    <tr>
-                        <td colspan="5"><strong>Total</strong></td>
-                        <td colspan="2">Rp.<?= number_format($total, 0, ',', '.'); ?></td>
-                    </tr>
                 </table>
                 <div class="row">
                     <div class="col-md-2">

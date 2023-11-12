@@ -63,7 +63,7 @@
                             value="<?= $kk['tgl_meninggal']; ?>">
                     </div>
                     <div class="form-group">
-                        <a href="<?= base_url('admin/kk'); ?>" class="btn btn-secondary" data-dismiss="modal">Keluar</a>
+                        <a href="<?= base_url('superAdmin/kk'); ?>" class="btn btn-secondary" data-dismiss="modal">Keluar</a>
                         <button type="submit" class="btn btn-success">Ubah</button>
                     </div>
                     <?= form_close(); ?>

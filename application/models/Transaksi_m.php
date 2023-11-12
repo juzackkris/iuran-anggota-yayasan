@@ -1,4 +1,7 @@
 <?php
+
+use PhpParser\Node\Expr\FuncCall;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Transaksi_m extends CI_Model
@@ -40,9 +43,26 @@ class Transaksi_m extends CI_Model
         return $this->db->get_where('anggota', $idAnggota)->row_array();
     }
 
+    public function updateBanyak($nobayar, $tglbayar, $nomor_id, $id_pb){
+        $query = "UPDATE pembayaran INNER JOIN kk ON kk.id_keluarga = pembayaran.id_keluarga 
+                  SET pembayaran.nobayar = '$nobayar', pembayaran.tglbayar = '$tglbayar', pembayaran.ket = 'Lunas' WHERE kk.nomor_id = '$nomor_id'
+                  AND pembayaran.id_pb IN ('$id_pb')";
+        return $this->db->query($query);
+    }
+
     public function get_join($mulaiTgl, $sampaiTgl)
     {
         $query = "SELECT pembayaran.*, kk.nomor_id, kk.nama_kk, kk.alamat FROM pembayaran INNER JOIN kk ON kk.id_keluarga = pembayaran.id_keluarga WHERE tglbayar BETWEEN date_format('$mulaiTgl', '%d-%m-%Y') AND date_format('$sampaiTgl', '%d-%m-%Y') ORDER BY tglbayar ASC";
+        return $this->db->query($query);
+    }
+
+    public function get_pendaftaran_bulanan($tgl_input){
+        $query = "SELECT nomor_id, nama_kk, alamat FROM kk WHERE tgl_input = '$tgl_input' UNION SELECT status, nama, alamat FROM anggota WHERE tgl_input = '$tgl_input'";
+        return $this->db->query($query);
+    }
+
+    public function get_kematian_anggota($mulaiTgl, $sampaiTgl){
+        $query = "SELECT nomor_id, nama_kk, alamat FROM kk WHERE tgl_meninggal BETWEEN '$mulaiTgl' AND '$sampaiTgl' UNION SELECT status, nama, alamat FROM anggota WHERE tgl_meninggal BETWEEN '$mulaiTgl' AND '$sampaiTgl';";
         return $this->db->query($query);
     }
 

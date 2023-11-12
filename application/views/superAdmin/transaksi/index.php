@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <div class="alert alert-info" role="alert"><i class="fas fa-info"></i> Masukan Nomor ID Kepala Keluarga
                     yang sudah terdaftar untuk melihat Iuran Bulanan.</div>
-                <form action="<?= base_url('admin/transaksi/cariTransaksi') ?>" method="get">
+                <form action="<?= base_url('superAdmin/transaksi/cariTransaksi') ?>" method="get">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Nomor ID Kepala Keluarga..."
                             name="nomor_id" autofocus="on">
@@ -60,7 +60,7 @@
             <h4 class="text-center">Cetak Struk Pertanggal</h4>
                     <div class="card">
                         <div class="card-body">
-                            <?= form_open('admin/laporan/cetakStrukPeriode/'. $kk['nomor_id']); ?>
+                            <?= form_open('superAdmin/laporan/cetakStrukPeriode/'. $kk['nomor_id']); ?>
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
                                 <input type="date" id="datepicker" name="tanggal" class="form-control">
@@ -85,9 +85,9 @@
         <div class="card shadow mb-4 mt-4">
             <div class="card-body">
                 <div class="table-responsive">
-                <form action="<?= base_url('admin/transaksi/bayarBanyak/' . $kk['nomor_id']) ?>" method="POST">
+                <form action="<?= base_url('superAdmin/transaksi/bayarBanyak/' . $kk['nomor_id']) ?>" method="POST">
                     <table class="table table-sm table-striped" id="dataTable" width="100%" cellspacing="0">
-                        <a href="<?= base_url('admin/laporan/cetakStruk/' .  $kk['nomor_id']); ?>" target="_self"
+                        <a href="<?= base_url('superAdmin/laporan/cetakStruk/' .  $kk['nomor_id']); ?>" target="_self"
                             class="btn btn-primary mb-3">Cetak Struk <i class="fas fa-print"></i></a>
                         <thead>
                             <tr>
@@ -112,16 +112,16 @@
                                 <td><?= $s['ket']; ?></td>
                                 <td>
                                     <?php if ($s['nobayar'] == null) : ?>
-                                    <a href="<?= base_url('admin/transaksi/bayar/' . $kk['nomor_id'] . '/' . $s['id_pb']); ?>"
+                                    <a href="<?= base_url('superAdmin/transaksi/bayar/' . $kk['nomor_id'] . '/' . $s['id_pb']); ?>"
                                         class="btn btn-success">Bayar</a>
                                     <?php else : ?>
-                                    <a href="<?= base_url('admin/transaksi/batal/' . $kk['nomor_id'] . '/' . $s['id_pb']); ?>"
+                                    <a href="<?= base_url('superAdmin/transaksi/batal/' . $kk['nomor_id'] . '/' . $s['id_pb']); ?>"
                                         class="btn btn-danger btn-sm">Batal</a>
                                     
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">
-                                    <input type="checkbox" id="morePage" name="checkbox_value[]" value="<?= $s['id_pb']; ?>">
+                                    <input type="checkbox" name="checkbox_value[]" value="<?= $s['id_pb']; ?>">
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -137,8 +137,3 @@
 
     </div>
 </div>
-
-<script>
-    
-    
-</script>

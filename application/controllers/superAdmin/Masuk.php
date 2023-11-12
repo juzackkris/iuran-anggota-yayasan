@@ -1,18 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Home extends CI_Controller
+class Masuk extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         $this->load->helper('url');
-        if ($this->session->userdata('status') !== "login"){
-        }
     }
     public function index()
     {
-        $this->load->view('home/index');
+        $this->load->view('superAdmin/masuk/index');
     }
 
     public function proses()
@@ -28,6 +26,7 @@ class Home extends CI_Controller
         $data_admin = $cek_admin->result();
         $data_SuperAdmin = $cek_SuperAdmin->result();
 
+
         if ($banyak_admin >= 1) {
             $data_session = array(
                 'id_admin' => $data_admin[0]->id_admin,
@@ -35,17 +34,18 @@ class Home extends CI_Controller
                 'status' => 'login'
             );
             $this->session->set_userdata($data_session);
-            redirect('admin/dashboard');
-        }
+            redirect('admin/Dashboard');
+        } 
         elseif ($banyak_SuperAdmin >= 1) {
             $data_session = array(
-                'id_super_admin' => $data_SuperAdmin[0]->id_super_admin,
+                'id_super_admin' => $data_SuperAdmin[0]->id_SuperAdmin,
                 'username' => $username,
                 'status' => 'login'
             );
             $this->session->set_userdata($data_session);
-            redirect('superAdmin/dashboard');
+            redirect('superAdmin/home');
         } 
+        
         else {
             $this->session->set_flashdata('error', 'Username atau Password masih salah');
             redirect('home');

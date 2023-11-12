@@ -14,10 +14,10 @@ class Kk extends CI_Controller
     public function index()
     {
         if ($this->session->userdata('status') == "login") {
-            $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+            $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
             $data = array(
-                'id_admin' => $data->id_admin,
-                'nama_admin' => $data->nama_admin,
+                'id_super_admin' => $data->id_super_admin,
+                'nama_super_admin' => $data->nama_super_admin,
                 'username' => $data->username,
                 'password' => $data->password
             );
@@ -32,10 +32,10 @@ class Kk extends CI_Controller
             $this->form_validation->set_rules('nomor_id', 'nomor_id', 'required|trim', ['required' => 'Nomor ID wajib di isi!.']);
             $this->form_validation->set_rules('nomor_kk', 'nomor_kk', 'required|trim', ['required' => 'Nomor Kartu Keluarga wajib di isi!.']);
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('templates/header', $data);
-                $this->load->view('templates/sidebar', $data);
-                $this->load->view('admin/kk/index', $data);
-                $this->load->view('templates/footer');
+                $this->load->view('templates_super_admin/header', $data);
+                $this->load->view('templates_super_admin/sidebar', $data);
+                $this->load->view('superAdmin/kk/index', $data);
+                $this->load->view('templates_super_admin/footer');
                 // $this->session->set_flashdata('danger', '<div class="alert alert-danger" role="alert"><i class="fas fa-info-circle"></i> Data yang diisi belum lengkap</div>');
             } else {
                 $tgl_input = date('Y-m');
@@ -114,7 +114,7 @@ class Kk extends CI_Controller
                 }
 
                 $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-info-circle"></i> Data Kepala Keluarga Berhasil Ditambahkan.</div>');
-                redirect('admin/kk');
+                redirect('superAdmin/kk');
             }
         } else {
             redirect('home/keluar/');
@@ -123,10 +123,10 @@ class Kk extends CI_Controller
 
     public function ubahKk($id)
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -145,10 +145,10 @@ class Kk extends CI_Controller
         $this->form_validation->set_rules('nomor_kk', 'nomor_kk', 'required|trim', ['required' => 'Nomor Kartu Keluarga wajib di isi!.']);
         $this->form_validation->set_rules('biaya', 'Biaya', 'required|trim', ['required' => 'Biaya wajib di isi!.']);
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('admin/kk/ubah', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates_super_admin/header', $data);
+            $this->load->view('templates_super_admin/sidebar', $data);
+            $this->load->view('superAdmin/kk/ubah', $data);
+            $this->load->view('templates_super_admin/footer');
         } else {
             $this->db->delete('pembayaran', ['id_keluarga' => $id]);
             $this->ubahDataKk($id);
@@ -202,7 +202,7 @@ class Kk extends CI_Controller
         for ($i = 0; $i < 360; $i++) {
             // membuat tgl jatuh tempo nya setiap tanggal 10
             // $jatuhTempo = date('d-m-Y', strtotime("+$i month"));
-            $jatuhTempo = date('d-m-Y', strtotime("1 October 2023"));
+            $jatuhTempo = date('d-m-Y', strtotime("1 January 2024"));
             $date = new DateTime($jatuhTempo);
             $date->modify("+$i month");
             $dateMon = $date->format('F Y');
@@ -218,74 +218,13 @@ class Kk extends CI_Controller
             $this->db->where('id_keluarga', $id_Kk);
         }
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-info-circle"></i> Data Kepala Keluarga Berhasil Diubah.</div>');
-        redirect('admin/kk');
-    }
-
-    public function ubahIuran()
-    {
-        $biaya = 15000;
-        $checkbox_id_kk = $this->input->post('checkbox_id_kk' , true);
-
-        if (!empty($checkbox_id_kk)) {
-            $this->db->where_in('id_keluarga', $checkbox_id_kk);
-            $this->db->delete('pembayaran');
-            $AwalJatuhTempo = $this->input->post('jatuh_tempo', true);
-
-            // Tampil bulan berdasarkan bhs indonesia
-            $bulanIndo = [
-                '01' => 'Januari',
-                '02' => 'Februari',
-                '03' => 'Maret',
-                '04' => 'April',
-                '05' => 'Mei',
-                '06' => 'Juni',
-                '07' => 'Juli',
-                '08' => 'Agustus',
-                '09' => 'September',
-                '10' => 'Oktober',
-                '11' => 'November',
-                '12' => 'Desember'
-            ];
-
-            // Ambil data DB kk berdasarkan id_keluarga
-            // $this->db->limit(1);
-            // $this->db->order_by('id_keluarga', 'desc');
-            // $kk = $this->db->get('kk')->row_array();
-            // $id_Kk = $kk['id_keluarga'];
-
-            $query = "SELECT * FROM kk WHERE id_keluarga IN ($checkbox_id_kk)";
-            $id_Kk = $this->db->query($query)->result_array();
-
-            for ($i = 0; $i < 360; $i++) {
-                // membuat tgl jatuh tempo nya setiap tanggal 10
-                // $jatuhTempo = date('d-m-Y', strtotime("+$i month"));
-                $jatuhTempo = date('d-m-Y', strtotime("1 October 2023"));
-                $date = new DateTime($jatuhTempo);
-                $date->modify("+$i month");
-                $dateMon = $date->format('F Y');
-                // $bulan = $bulanIndo[date('m', strtotime($dateMon))] . " " . date('Y', strtotime($dateMon));
-                $data = [
-                    'id_keluarga' => $id_Kk,
-                    'jatuh_tempo' => $jatuhTempo,
-                    'bulan' => $dateMon,
-                    'jumlah' => $biaya
-                ];
-                $this->Kk_m->insert('pembayaran', $data);
-                $this->db->where_in('id_keluarga', $checkbox_id_kk);
-                }
-                $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-info-circle"></i> Data Iuran Berhasil Diubah.</div>');
-                redirect('admin/kk');
-            }
-            else{
-                $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert"><i class="fas fa-info-circle"></i> Data Iuran gagal Diubah.</div>');
-                redirect('admin/kk');   
-            }
+        redirect('superAdmin/kk');
     }
 
     public function hapus($id)
     {
         $this->db->delete('kk', ['id_keluarga' => $id]);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-trash"></i> Data Kepala Keluarga Berhasil Dihapus.</div>');
-        redirect('admin/kk');
+        redirect('superAdmin/kk');
     }
 }

@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md">
             <div class="card"></br>
-                <h4 class="text-center"><b>NOTA PEMBAYARAN IURAN YAYASAN DHARMA BHAKTI CIKAMPEK</b></h4></br>
+                <h4 class="text-center"><b>STRUK PEMBAYARAN IURAN YAYASAN DHARMA BHAKTI CIKAMPEK</b></h4></br>
                 <div class="row">
                     <div class="col-md-5 offset-md-1">
                         <table class="table table-borderless">

@@ -10,7 +10,6 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-            <form action="<?= base_url('admin/kk/ubahIuran/') ?>" method="POST">
                 <table class="table table-bordered table-sm table-hover" id="dataTable" width="100%" cellspacing="0" >
                     <thead>
                         <tr align="center">
@@ -23,7 +22,6 @@
                             <th>NIK</th>
                             <th>NOMOR KK</th>
                             <th>AKSI</th>
-                            <!-- <th class="text-center"><button type="submit" class="btn btn-success btn-sm">Ubah</button></th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -39,16 +37,12 @@
                                 <td><?= $k['nik']; ?></td>
                                 <td><?= $k['nomor_kk']; ?></td>
                                 <td align="center">
-                                    <a class="btn btn-sm btn-primary " href="<?php echo base_url('admin/kk/ubahKk/' . $k['id_keluarga']) ?>"><i class="fas fa-user-edit"></i></a>
-                                    <a onclick="return confirm('Yakin Hapus')" class="btn btn-sm btn-danger " href="<?php echo base_url('admin/kk/hapus/' . $k['id_keluarga']) ?>"><i class="fas fa-trash"></i></a>
+                                    <a class="btn btn-sm btn-primary " href="<?php echo base_url('superAdmin/kk/ubahKk/' . $k['id_keluarga']) ?>"><i class="fas fa-user-edit"></i></a>
+                                    <a onclick="return confirm('Yakin Hapus')" class="btn btn-sm btn-danger " href="<?php echo base_url('superAdmin/kk/hapus/' . $k['id_keluarga']) ?>"><i class="fas fa-trash"></i></a>
                                 </td>
-                                <!-- <td class="text-center">
-                                    <input type="checkbox" id="morePage" name="checkbox_id_kk[]" value="<?= $k['id_keluarga']; ?>">
-                                </td> -->
                             </tr>
                         <?php endforeach; ?>
                 </table>
-            </form>
             </div>
         </div>
     </div>

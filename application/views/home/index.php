@@ -58,7 +58,7 @@
                                     <?php
                                     }
                                     ?>
-                                    <form action="<?php echo base_url('admin/masuk/proses/'); ?>" method="POST">
+                                    <form action="<?php echo base_url('home/proses/'); ?>" method="POST">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                             placeholder="Username" name="username">

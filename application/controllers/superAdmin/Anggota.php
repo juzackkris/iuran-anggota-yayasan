@@ -12,10 +12,10 @@ class Anggota extends CI_Controller
     public function index()
     {
         if ($this->session->userdata('status') == "login") {
-            $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+            $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
             $data = array(
-                'id_admin' => $data->id_admin,
-                'nama_admin' => $data->nama_admin,
+                'id_super_admin' => $data->id_super_admin,
+                'nama_super_admin' => $data->nama_super_admin,
                 'username' => $data->username,
                 'password' => $data->password
             );
@@ -31,10 +31,10 @@ class Anggota extends CI_Controller
             $this->form_validation->set_rules('no_kk', 'No Kartu Keluarga', 'required|trim', ['required' => 'Nomor Kartu Keluarga wajib di isi!.']);
             $this->form_validation->set_rules('nik', 'No Kartu Keluarga', 'required|trim', ['required' => 'NIK wajib di isi!.']);
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('templates/header', $data);
-                $this->load->view('templates/sidebar', $data);
-                $this->load->view('admin/Anggota/index', $data);
-                $this->load->view('templates/footer');
+                $this->load->view('templates_super_admin/header', $data);
+                $this->load->view('templates_super_admin/sidebar', $data);
+                $this->load->view('superAdmin/Anggota/index', $data);
+                $this->load->view('templates_super_admin/footer');
             } else {
                 $tgl_input = date('Y-m');
                 $data = [
@@ -62,10 +62,10 @@ class Anggota extends CI_Controller
 
     public function ubahAnggota($id)
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -85,10 +85,10 @@ class Anggota extends CI_Controller
         $this->form_validation->set_rules('no_kk', 'Nomor Kartu Keluarga', 'required|trim', ['required' => 'Nomor Kartu Keluarga wajib di isi!.']);
         $this->form_validation->set_rules('nik', 'Nomor Kartu Keluarga', 'required|trim', ['required' => 'NIK wajib di isi!.']);
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('admin/anggota/ubah', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates_super_admin/header', $data);
+            $this->load->view('templates_super_admin/sidebar', $data);
+            $this->load->view('superAdmin/anggota/ubah', $data);
+            $this->load->view('templates_super_admin/footer');
         } else {
             $this->ubahDataAnggota();
         }
@@ -96,10 +96,10 @@ class Anggota extends CI_Controller
 
     public function ubahDataAnggota()
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
         $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
+            'id_super_admin' => $data->id_super_admin,
+            'nama_super_admin' => $data->nama_super_admin,
             'username' => $data->username,
             'password' => $data->password
         );
@@ -118,20 +118,20 @@ class Anggota extends CI_Controller
         $this->db->where('id_anggota', $idAnggota);
         $this->Anggota_m->update('anggota', $data);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-info-circle"></i> Data Anggota Keluarga Berhasil Diubah.</div>');
-        redirect('admin/anggota');
+        redirect('superAdmin/anggota');
     }
 
     public function hapus($id)
     {
-        $data = $this->Admin_m->ambil_data($this->session->userdata('id_admin'));
-        $data = array(
-            'id_admin' => $data->id_admin,
-            'nama_admin' => $data->nama_admin,
-            'username' => $data->username,
-            'password' => $data->password
-        );
+        $data = $this->SuperAdmin_m->ambil_data($this->session->userdata('id_super_admin'));
+            $data = array(
+                'id_super_admin' => $data->id_super_admin,
+                'nama_super_admin' => $data->nama_super_admin,
+                'username' => $data->username,
+                'password' => $data->password
+            );
         $this->db->delete('anggota', ['id_anggota' => $id]);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-trash"></i> Data Anggota Keluarga Berhasil Dihapus.</div>');
-        redirect('admin/anggota');
+        redirect('superAdmin/anggota');
     }
 }
