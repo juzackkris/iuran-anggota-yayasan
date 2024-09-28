@@ -64,13 +64,7 @@ class Transaksi extends CI_Controller
 
     public function bayar($nomor_id, $id)
     {
-<<<<<<< HEAD
-        $today = date('d-m-Y');
-        // $hari_ini = date("d-m-Y", time() + 86400);
-        $hari_ini = date("d-m-Y", strtotime("-1 month", strtotime($today)));
-=======
         $hari_ini = date('d-m-Y');
->>>>>>> 4cfcc07f3428324aeb0a4622383f6a3e948b3c31
         $today = date('ymd');
 
         // membuat no bayar acak
