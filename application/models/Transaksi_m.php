@@ -52,6 +52,7 @@ class Transaksi_m extends CI_Model
 
     public function get_join($mulaiTgl, $sampaiTgl)
     {
+<<<<<<< HEAD
         // // Cek tipe data parameter
         // var_dump($mulaiTgl);
         // var_dump($sampaiTgl);
@@ -69,6 +70,9 @@ class Transaksi_m extends CI_Model
                   BETWEEN STR_TO_DATE('$mulaiTgl', '%Y-%m-%d') 
                   AND STR_TO_DATE('$sampaiTgl', '%Y-%m-%d')
                   GROUP BY pembayaran.id_keluarga";
+=======
+        $query = "SELECT pembayaran.*, kk.nomor_id, kk.nama_kk, kk.alamat FROM pembayaran INNER JOIN kk ON kk.id_keluarga = pembayaran.id_keluarga WHERE tglbayar BETWEEN date_format('$mulaiTgl', '%d-%m-%Y') AND date_format('$sampaiTgl', '%d-%m-%Y') ORDER BY tglbayar ASC";
+>>>>>>> 4cfcc07f3428324aeb0a4622383f6a3e948b3c31
         return $this->db->query($query);
     }
 

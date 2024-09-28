@@ -19,8 +19,15 @@
                         <th>No</th>
                         <th>ID</th>
                         <th>Kepala Keluarga</th>
+<<<<<<< HEAD
                         <th>Jumlah Bulan</th>
                         <th>Nominal</th>
+=======
+                        <th>Alamat</th>
+                        <th>No.Bayar</th>
+                        <th>Pembayaran Bulan</th>
+                        <th>Jumlah</th>
+>>>>>>> 4cfcc07f3428324aeb0a4622383f6a3e948b3c31
                         <th>Keterangan</th>
                     </tr>
                     <?php $total = 0;
@@ -30,6 +37,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= $b['nomor_id']; ?></td>
                             <td><?= $b['nama_kk']; ?></td>
+<<<<<<< HEAD
                             <td><?= $b['jumlah_bulan_bayar']; ?></td>
                             <td>Rp.<?= number_format($b['jumlah_total'], 0, ',', '.'); ?></td>
                             <td><?= $b['ket']; ?></td>
@@ -38,6 +46,18 @@
                     <?php endforeach; ?>
                     <tr>
                         <td colspan="4"><strong>Total</strong></td>
+=======
+                            <td><?= $b['alamat']; ?></td>
+                            <td><?= $b['nobayar']; ?></td>
+                            <td><?= $b['bulan']; ?></td>
+                            <td><?= $b['jumlah']; ?></td>
+                            <td><?= $b['ket']; ?></td>
+                        </tr>
+                        <?php $total += $b['jumlah']; ?>
+                    <?php endforeach; ?>
+                    <tr>
+                        <td colspan="6"><strong>Total</strong></td>
+>>>>>>> 4cfcc07f3428324aeb0a4622383f6a3e948b3c31
                         <td>Rp.<?= number_format($total, 0, ',', '.'); ?></td>
                     </tr>
                 </table>

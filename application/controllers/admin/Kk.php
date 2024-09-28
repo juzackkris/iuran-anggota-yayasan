@@ -150,7 +150,11 @@ class Kk extends CI_Controller
             $this->load->view('admin/kk/ubah', $data);
             $this->load->view('templates/footer');
         } else {
+<<<<<<< HEAD
             // $this->db->delete('pembayaran', ['id_keluarga' => $id]);
+=======
+            $this->db->delete('pembayaran', ['id_keluarga' => $id]);
+>>>>>>> 4cfcc07f3428324aeb0a4622383f6a3e948b3c31
             $this->ubahDataKk($id);
         }
     }
@@ -175,6 +179,7 @@ class Kk extends CI_Controller
         $AwalJatuhTempo = $this->input->post('jatuh_tempo', true);
 
         // Tampil bulan berdasarkan bhs indonesia
+<<<<<<< HEAD
         // $bulanIndo = [
         //     '01' => 'Januari',
         //     '02' => 'Februari',
@@ -217,6 +222,50 @@ class Kk extends CI_Controller
         //     $this->Kk_m->insert('pembayaran', $data);
         //     $this->db->where('id_keluarga', $id_Kk);
         // }
+=======
+        $bulanIndo = [
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember'
+        ];
+        // update data
+        $this->db->where('id_keluarga', $idKk);
+        $this->Kk_m->update('kk', $data);
+
+        // Ambil data DB kk berdasarkan id_keluarga
+        $this->db->limit(1);
+        $this->db->order_by('id_keluarga', 'desc');
+        $kk = $this->db->get('kk')->row_array();
+        $id_Kk = $kk['id_keluarga'];
+
+        for ($i = 0; $i < 360; $i++) {
+            // membuat tgl jatuh tempo nya setiap tanggal 10
+            // $jatuhTempo = date('d-m-Y', strtotime("+$i month"));
+            $jatuhTempo = date('d-m-Y', strtotime("1 October 2023"));
+            $date = new DateTime($jatuhTempo);
+            $date->modify("+$i month");
+            $dateMon = $date->format('F Y');
+            // $bulan = $bulanIndo[date('m', strtotime($dateMon))] . " " . date('Y', strtotime($dateMon));
+
+            $data = [
+                'id_keluarga' => $id,
+                'jatuh_tempo' => $jatuhTempo,
+                'bulan' => $dateMon,
+                'jumlah' => $biaya
+            ];
+            $this->Kk_m->insert('pembayaran', $data);
+            $this->db->where('id_keluarga', $id_Kk);
+        }
+>>>>>>> 4cfcc07f3428324aeb0a4622383f6a3e948b3c31
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert"><i class="fas fa-info-circle"></i> Data Kepala Keluarga Berhasil Diubah.</div>');
         redirect('admin/kk');
     }
